@@ -7,7 +7,7 @@
     <ProjectGuid>{760884B9-4507-4356-88C2-468B71F20BC4}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Kraggs.TSM7.Utils</RootNamespace>
+    <RootNamespace>Kraggs.TSM7</RootNamespace>
     <AssemblyName>Kraggs.TSM7</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

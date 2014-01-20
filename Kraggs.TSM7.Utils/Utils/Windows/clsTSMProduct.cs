@@ -25,7 +25,7 @@ using System.Text;
 
 using System.Diagnostics;
 
-namespace Kraggs.TSM7.Utils.Utils.Windows
+namespace Kraggs.TSM7.Utils.Windows
 {
     [DebuggerDisplay("{Component}, v{PtfLevel}")]
     internal class clsTSMProduct

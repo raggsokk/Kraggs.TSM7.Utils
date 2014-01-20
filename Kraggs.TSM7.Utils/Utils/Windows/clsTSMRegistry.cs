@@ -27,7 +27,7 @@ using System.Diagnostics;
 
 using Microsoft.Win32;
 
-namespace Kraggs.TSM7.Utils.Utils.Windows
+namespace Kraggs.TSM7.Utils.Windows
 {
     internal static class clsTSMRegistry
     {
