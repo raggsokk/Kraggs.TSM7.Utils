@@ -7,6 +7,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraggs.TSM7.Utils", "Kraggs
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kraggs.TSM7.Utils.Tests", "Kraggs.TSM7.Utils.Tests\Kraggs.TSM7.Utils.Tests.csproj", "{01ABF8F0-2D90-4BB5-A1B6-F2A37FCC5076}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{9AA9C5E9-9EBF-4746-B5B8-749855F8DD37}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\packages.config = .nuget\packages.config
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
