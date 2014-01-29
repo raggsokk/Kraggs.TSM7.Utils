@@ -25,7 +25,7 @@ namespace Kraggs.TSM7.Utils.Tests.UseCases
                 Environment.OSVersion.Platform == PlatformID.MacOSX) ? "dsmadmc" : "dsmadmc.exe";
 
             Assert.IsTrue(File.Exists(Path.Combine(
-                prod.Path, binDsmAdmc)));
+                prod.Path, binDsmAdmc)));            
         }
     }
 }
