@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <VisualState xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ShowCheckBoxes="false">
   <TopNode>[0-1000]C:\Code\GitHub\Kraggs.TSM7.Utils\Kraggs.TSM7.Utils.Tests\Kraggs.TSM7.Utils.Tests.nunit</TopNode>
-  <SelectedNode>[0-1007]C:\Code\GitHub\Kraggs.TSM7.Utils\Kraggs.TSM7.Utils.Tests\bin\Debug\Kraggs.TSM7.Utils.Tests.dll</SelectedNode>
+  <SelectedNode>[0-1001]Kraggs.TSM7.Utils.Tests.Coverage.clsTSMRegistryCoverage</SelectedNode>
   <ExcludeCategories>false</ExcludeCategories>
   <Nodes>
     <Node UniqueName="[0-1000]C:\Code\GitHub\Kraggs.TSM7.Utils\Kraggs.TSM7.Utils.Tests\Kraggs.TSM7.Utils.Tests.nunit" Expanded="true" />
