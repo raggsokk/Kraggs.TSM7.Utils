@@ -68,7 +68,10 @@ namespace Kraggs.TSM7.Utils
         { 
             get
             {
-                return Path.Combine(BAClientPath, "dsm.opt");
+                if (!string.IsNullOrWhiteSpace(BAClientPath))
+                    return Path.Combine(BAClientPath, "dsm.opt");
+                else
+                    return null;
             }
         }
         

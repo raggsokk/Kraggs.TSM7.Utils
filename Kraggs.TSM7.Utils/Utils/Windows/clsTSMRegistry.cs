@@ -59,18 +59,18 @@ namespace Kraggs.TSM7.Utils.Windows
             if(!Environment.Is64BitOperatingSystem)
             {
                 // if not 64 bit os, skip separate 32 and 64 check.
-                var adsmcur = Registry.LocalMachine.OpenSubKey(REGISTRY_ADSM_CURRENTVERSION);
+                var adsmcur = Registry.LocalMachine.OpenSubKey(RegKey);
 
                 EnumerateAdsmCur(adsmcur);
             }
             else
             {
                 var hklm32 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry32);
-                var adsmcur32 = hklm32.OpenSubKey(REGISTRY_ADSM_CURRENTVERSION);
+                var adsmcur32 = hklm32.OpenSubKey(RegKey);
                 EnumerateAdsmCur(adsmcur32);
 
                 var hklm64 = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, RegistryView.Registry64);
-                var adsmcur64 = hklm64.OpenSubKey(REGISTRY_ADSM_CURRENTVERSION);
+                var adsmcur64 = hklm64.OpenSubKey(RegKey);
                 EnumerateAdsmCur(adsmcur64);
             }
         }
