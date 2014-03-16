@@ -83,19 +83,50 @@ namespace Kraggs.TSM7.Utils.Windows
 
                 foreach(var keyname in components.GetValueNames())
                 {
+                    clsTSMProduct prod;
+                    if(keyname == "TSM Backup Archive Client")
+                        prod = new clsTSMBAClientProduct();
+                    else
+                        prod = new clsTSMProduct();
+
                     // read in product entry
-                    var prod = new clsTSMProduct() { 
-                        Component = keyname,
-                        RegSubKey = components.GetValue(keyname) as string
-                    };
+                    prod.Component = keyname;
+                    prod.RegSubKey = components.GetValue(keyname) as string;
                     
                     // read in separate product info.
                     var prodkey = AdsmCur.OpenSubKey(prod.RegSubKey);
                     prod.Path = prodkey.GetValue("Path") as string;
                     prod.PtfLevel = new Version(prodkey.GetValue("PtfLevel") as string);
 
+
+                    // BackupClient reg extended info retrival.
+                    if(prod.RegSubKey == "BackupClient")
+                    {
+                        var baprod = prod as clsTSMBAClientProduct;
+                        Debug.Assert(baprod != null);
+
+                        var adsmsyspath = prodkey.GetValue("DefaultVssStagingDir", string.Empty) as string;
+                        if (adsmsyspath != string.Empty)
+                            baprod.DefaultVssStagingDir = adsmsyspath;
+
+                        // Smaller codebase means less chance of bugs. chopping this out until needed.
+                        //var keyLanguages = prodkey.OpenSubKey("Languages");
+                        //if (keyLanguages != null)
+                        //{
+                        //    foreach(var lang in keyLanguages.GetValueNames())
+                        //    {
+                        //        var langcodeO = keyLanguages.GetValue(lang);
+
+                        //    }
+                        //}
+                    }                    
+                    
+
                     sTSMProducts.Add(prod.Component, prod);
+                    prodkey.Dispose();
                 }
+
+                components.Dispose();
 
                 return true;
             }

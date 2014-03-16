@@ -35,4 +35,13 @@ namespace Kraggs.TSM7.Utils.Windows
         public string Path { get; set; }
         public Version PtfLevel { get; set; }
     }
+
+    [DebuggerDisplay("{Component}, v{PtfLevel}")]
+    internal class clsTSMBAClientProduct : clsTSMProduct
+    {
+        public string DefaultVssStagingDir { get; set; }
+
+        // Smaller codebase means less chance of bugs. chopping this out until needed.
+        //public SortedList<string, int> Languages { get; set; }
+    }
 }
