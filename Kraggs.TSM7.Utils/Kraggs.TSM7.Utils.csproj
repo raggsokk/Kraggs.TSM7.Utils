@@ -35,6 +35,8 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="clsTSMMessage.cs" />
+    <Compile Include="clsTSMException.cs" />
     <Compile Include="Utils\absTSMPlatform.cs" />
     <Compile Include="Utils\clsDsmAdmc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
