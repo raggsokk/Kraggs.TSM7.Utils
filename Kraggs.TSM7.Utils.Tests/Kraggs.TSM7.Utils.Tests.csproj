@@ -41,8 +41,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsDsmAdmcTests.cs" />
+    <Compile Include="Coverage\clsTSMPlatformCoverage.cs" />
     <Compile Include="Coverage\clsTSMRegistryCoverage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="UseCases\clsTSMPlatformUseCases.cs" />
     <Compile Include="UseCases\clsTSMRegistryUseCases.cs" />
   </ItemGroup>
   <ItemGroup>
