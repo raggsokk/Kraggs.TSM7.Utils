@@ -28,6 +28,9 @@ using System.Runtime.Serialization;
 
 namespace Kraggs.TSM7
 {
+    /// <summary>
+    /// 
+    /// </summary>
     public class clsTSMException : Exception
     {
         public int ExitCode { get; set; }
@@ -64,6 +67,7 @@ namespace Kraggs.TSM7
                     this.TSMMessages.Add(msg);
             }
         }
+
         protected clsTSMException( SerializationInfo info, StreamingContext context ) : base( info, context ) 
         { 
             if(info != null)
