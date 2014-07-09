@@ -1,0 +1,5 @@
+﻿/* cleanu locked admin */
+q admin NUNIT_ADMIN_LOCKED
+if(rc_ok)
+	remove admin NUNIT_ADMIN_LOCKED
+

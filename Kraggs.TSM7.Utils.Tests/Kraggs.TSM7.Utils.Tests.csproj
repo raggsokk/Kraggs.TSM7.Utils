@@ -44,11 +44,14 @@
     <Compile Include="Coverage\clsTSMMessageCoverage.cs" />
     <Compile Include="Coverage\clsTSMPlatformCoverage.cs" />
     <Compile Include="Coverage\clsTSMRegistryCoverage.cs" />
+    <Compile Include="Coverage\clsTSMServerErrorCoverage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UseCases\clsTSMPlatformUseCases.cs" />
     <Compile Include="UseCases\clsTSMRegistryUseCases.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Coverage\TSMServerTestState_Cleanup.mac" />
+    <None Include="Coverage\TSMServerTestState_Setup.mac" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
