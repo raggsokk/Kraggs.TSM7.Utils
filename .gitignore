@@ -109,3 +109,4 @@ UpgradeLog*.XML
 
 # Ignore tsm password file.
 *.tsmpass
+*.ignore
