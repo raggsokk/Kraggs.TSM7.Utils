@@ -53,7 +53,7 @@ namespace Kraggs.TSM7.Utils
             this.pExecutable = clsTSMPlatform.TSMPlatform.DsmAdmcBinary;
             this.pWorkingDir = clsTSMPlatform.TSMPlatform.BAClientPath;
 
-            this.pOptFile = clsTSMPlatform.TSMPlatform.DsmOpt;
+            // this.pOptFile = clsTSMPlatform.TSMPlatform.DsmOpt;
 
             this.Validate();
         }
@@ -86,7 +86,7 @@ namespace Kraggs.TSM7.Utils
                 this.pOptFile = OptFile;
         }
 
-        //Doesn't have any error handling.
+        //Doesn't have any error handling. But now it does.
         //public AdmcExitCode RunTSMCommandToCallback(string tsmCommand, DataReceivedEventHandler output = null, int TimeoutMs = 0 )
         //{
         //    var sb = GenerateStandardArguments();
@@ -140,9 +140,9 @@ namespace Kraggs.TSM7.Utils
 
             sb.AppendFormat(" macro={0}", macrofile);
 
-            var dummylist = new List<string>(); // to enable error catching only.
+            //var dummylist = new List<string>(); // to enable error catching only. Dont need anymore.
 
-            return RunTSMCommand(sb.ToString(), dummylist, TimeoutMs);
+            return RunTSMCommand(sb.ToString(), null, TimeoutMs);
         }
 
         /// <summary>
@@ -175,9 +175,9 @@ namespace Kraggs.TSM7.Utils
 
             sb.AppendFormat(" \"{0}\"", tsmCommand);
 
-            var dummylist = new List<string>(); // to enable error catching only.
+            //var dummylist = new List<string>(); // to enable error catching only. Dont need anymore.
 
-            return RunTSMCommand(sb.ToString(), dummylist, TimeoutMs);
+            return RunTSMCommand(sb.ToString(), null, TimeoutMs);
         }
         /// <summary>
         /// Runs a tsm command and pipes result to a temp file. Result is then read into output unless errors occured.
@@ -226,15 +226,18 @@ namespace Kraggs.TSM7.Utils
         /// <returns></returns>
         protected virtual AdmcExitCode RunTSMCommand(string FinishedArgument, List<string> output, int TimeoutMs = 0)
         {
-            var retcode = (AdmcExitCode)base.RunCommand(FinishedArgument, output, null, TimeoutMs);
+            var list = output != null ? output : new List<string>();
+
+            //var retcode = (AdmcExitCode)base.RunCommand(FinishedArgument, output, null, TimeoutMs);
+            var retcode = (AdmcExitCode)base.RunCommand(FinishedArgument, list, null, TimeoutMs);
 
             if (!ThrowOnErrors)
             {
                 if (retcode != AdmcExitCode.Ok && retcode != AdmcExitCode.NotFound)
                 {
-                    if (output != null && output.Count > 0)
+                    if (list != null && list.Count > 0)
                     {
-                        throw new Exception(output[0]);
+                        throw new Exception(list[0]);
                     }
                     else //TODO: the error migth been redirected to outfile also. Check for error there?
                         throw new Exception("An unspecified error occured. Check with dsmerror.log for more info.");
