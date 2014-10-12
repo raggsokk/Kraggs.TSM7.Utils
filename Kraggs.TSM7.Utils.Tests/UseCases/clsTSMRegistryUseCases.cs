@@ -15,7 +15,6 @@ namespace Kraggs.TSM7.Utils.Tests.UseCases
     [TestFixture()]
     public class clsTSMRegistryUseCases
     {
-
         [Test]
         public void SimpleBAClientUseCase()
         {

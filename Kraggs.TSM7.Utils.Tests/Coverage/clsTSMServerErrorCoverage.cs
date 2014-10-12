@@ -24,50 +24,53 @@ namespace Kraggs.TSM7.Utils.Tests.Coverage
     ///     
     /// For TSM Server Connection handling see clsTSMServerConnectionCoverage.
     /// </summary>
-    [TestFixture()]
+    //[TestFixture()]
     public class clsTSMServerErrorCoverage
     {
-        private static bool flagTSMServerTestState = false;
+        // OLD CODE. NEEDS TO BE CLEANED UP!
 
-        private System.Net.NetworkCredential tsmcred;
 
-        [TestFixtureSetUp]
-        public void SetupTSMServerTestState()
-        {
-            if (flagTSMServerTestState) 
-                Assert.Fail("Fixture setup called multiple times.");
-            flagTSMServerTestState = true;
+        //private static bool flagTSMServerTestState = false;
 
-            // rest of setup.
+        //private System.Net.NetworkCredential tsmcred;
 
-            // 1. read in user, pass and server.
+        //[TestFixtureSetUp]
+        //public void SetupTSMServerTestState()
+        //{
+        //    if (flagTSMServerTestState) 
+        //        Assert.Fail("Fixture setup called multiple times.");
+        //    flagTSMServerTestState = true;
+
+        //    // rest of setup.
+
+        //    // 1. read in user, pass and server.
             
-            var line = File.ReadAllText(string.Format("..{0}..{0}nunit.tsmpass", Path.DirectorySeparatorChar));
-            var prosent = line.IndexOf('%');
-            var alpha = line.LastIndexOf('@');
+        //    var line = File.ReadAllText(string.Format("..{0}..{0}nunit.tsmpass", Path.DirectorySeparatorChar));
+        //    var prosent = line.IndexOf('%');
+        //    var alpha = line.LastIndexOf('@');
 
-            var user = line.Substring(0, prosent);
-            var server = line.Substring(alpha + 1);
-            var pass = line.Substring(prosent + 1, alpha - prosent - 1);
+        //    var user = line.Substring(0, prosent);
+        //    var server = line.Substring(alpha + 1);
+        //    var pass = line.Substring(prosent + 1, alpha - prosent - 1);
 
-            this.tsmcred = new System.Net.NetworkCredential(user, pass, server);
+        //    this.tsmcred = new System.Net.NetworkCredential(user, pass, server);
 
-            //var dsmadmc = new clsDsmAdmc()
-            throw new NotImplementedException(string.Format(
-                "'dsmadmc not implemented' -tcps={0} -id={1} -pa={2}", server, user, pass));
-        }
+        //    //var dsmadmc = new clsDsmAdmc()
+        //    throw new NotImplementedException(string.Format(
+        //        "'dsmadmc not implemented' -tcps={0} -id={1} -pa={2}", server, user, pass));
+        //}
 
-        [TestFixtureTearDown]
-        public void CleanupTSMServerTestState()
-        { 
-            // 
-            if (!flagTSMServerTestState)
-                Assert.Fail("Fixture cleanup called but setup was not called??");
-
-
+        //[TestFixtureTearDown]
+        //public void CleanupTSMServerTestState()
+        //{ 
+        //    // 
+        //    if (!flagTSMServerTestState)
+        //        Assert.Fail("Fixture cleanup called but setup was not called??");
 
 
-            //flagTSMServerTestState = false;
-        }
+
+
+        //    //flagTSMServerTestState = false;
+        //}
     }
 }
