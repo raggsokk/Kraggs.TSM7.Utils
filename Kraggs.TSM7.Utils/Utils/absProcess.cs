@@ -37,6 +37,10 @@ namespace Kraggs.TSM7.Utils
 
         private bool flagValidated;
 
+        //private bool flagDebugSaveLastCommand;
+        public bool DebugSaveLastCommand { get; set; } // = false;
+        public string DebugLastCommand { get; private set; }        
+
         /// <summary>
         /// protected empty constructor. Implementer is required to set pExecutable and call Validate before runprocess.
         /// </summary>
@@ -188,6 +192,10 @@ namespace Kraggs.TSM7.Utils
             // to ensure executable and working dir is set befora call, this.Validate() should be called in a ctor.
             if (!flagValidated)
                 throw new Exception("Programming error: absProcess::Validate is not called.");
+
+            if (DebugSaveLastCommand)
+                this.DebugLastCommand = string.Format(
+                    "Exe:'{0}', Args:'{1}'", proc.StartInfo.FileName, proc.StartInfo.Arguments);
 
             using(proc)
             {
