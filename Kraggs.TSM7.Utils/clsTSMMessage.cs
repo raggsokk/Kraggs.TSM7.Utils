@@ -60,6 +60,17 @@ namespace Kraggs.TSM7
         public string Text { get; set; }
 
         /// <summary>
+        /// Severity of message.
+        /// </summary>
+        public TSMSeverity Severity
+        {
+            get
+            {
+                return (TSMSeverity)Type;
+            }
+        }
+
+        /// <summary>
         /// Assembles the FullMessage.
         /// </summary>
         public string FullMessage
@@ -103,6 +114,11 @@ namespace Kraggs.TSM7
         public static bool TryParse(string MessageString, out clsTSMMessage tsmmsg)
         {
             tsmmsg = null;
+
+            if (string.IsNullOrWhiteSpace(MessageString))
+                return false;
+            if (MessageString.Length < 9)
+                return false;
 
             if (!Char.IsLetter(MessageString[0]))
                 return false;

@@ -30,6 +30,13 @@ namespace Kraggs.TSM7.Utils
 {
     /// <summary>
     /// A somewhat simple DsmAdmc binary wrapper.
+    /// TODO:
+    ///     DebugLastCommand:
+    ///         Optionally save last command executed for debuging purposes.
+    ///     Check existance of dsm.opt and throw error if not.
+    ///     Check write access to dsmerror.log beforehand. and throw error.
+    ///     Check size of dsmerror.log and throw warning 
+    ///     
     /// </summary>
     public class clsDsmAdmc : absProcess
     {
@@ -235,12 +242,13 @@ namespace Kraggs.TSM7.Utils
             {
                 if (retcode != AdmcExitCode.Ok && retcode != AdmcExitCode.NotFound)
                 {
-                    if (list != null && list.Count > 0)
-                    {
-                        throw new Exception(list[0]);
-                    }
-                    else //TODO: the error migth been redirected to outfile also. Check for error there?
-                        throw new Exception("An unspecified error occured. Check with dsmerror.log for more info.");
+                    throw new AdmcExitException(retcode, list);
+                    //if (list != null && list.Count > 0)
+                    //{
+                    //    throw new Exception(list[0]);
+                    //}
+                    //else //TODO: the error migth been redirected to outfile also. Check for error there?
+                    //    throw new Exception("An unspecified error occured. Check with dsmerror.log for more info.");
                 }
             }
 
