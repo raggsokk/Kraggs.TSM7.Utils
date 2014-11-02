@@ -37,7 +37,6 @@ namespace Kraggs.TSM7.Utils.Windows
 
         static clsTSMRegistry()
         {
-
             Initialize(REGISTRY_ADSM_CURRENTVERSION);
         }
 

@@ -18,13 +18,17 @@ namespace Kraggs.TSM7.Utils.Tests.UseCases
         [Test]
         public void SimpleBAClientUseCase()
         {
+			//TODO: Instead of reporting inconclusive on non-windows platforms. Test correct error handling!
+			if(!clsTSMPlatform.IsWindows)
+				Assert.Inconclusive();
+
             var prod = clsTSMRegistry.GetProductByName("TSM Administrative Client");
 
             var binDsmAdmc = (Environment.OSVersion.Platform == PlatformID.Unix ||
                 Environment.OSVersion.Platform == PlatformID.MacOSX) ? "dsmadmc" : "dsmadmc.exe";
 
             Assert.IsTrue(File.Exists(Path.Combine(
-                prod.Path, binDsmAdmc)));            
+                prod.Path, binDsmAdmc)));
         }
     }
 }
