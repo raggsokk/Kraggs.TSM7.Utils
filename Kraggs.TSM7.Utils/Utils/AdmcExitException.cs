@@ -26,6 +26,10 @@ using System.Linq;
 
 namespace Kraggs.TSM7.Utils
 {
+	/// <summary>
+	/// Admc exit exception. Usually thrown when dsmadmc exits in error state.
+	/// //TODO: Add Exit code to ErrorMessage.
+	/// </summary>
     public class AdmcExitException : TSMException // : Exception
     {
         public AdmcExitCode ExitCode { get; protected set; }
@@ -33,45 +37,15 @@ namespace Kraggs.TSM7.Utils
 
         //public AdmcExitException(AdmcExitCode exitCode, clsTSMMessage message)
         public AdmcExitException(AdmcExitCode exitCode, string message = null)
-            : this(exitCode, message != null ? new List<string>() { message} : null)
-        {
-            //throw new NotImplementedException();
+            : this(exitCode, message != null ? new List<string>() { message } : null)
+        {          
             // dummy!.
         }
 
         public AdmcExitException(AdmcExitCode exitCode, List<string> output = null)
         {
             this.ExitCode = exitCode;
-            this.DecodeMessage(output);
-
-            //if(output != null)
-            //{
-            //    this.DecodeMessage(output);
-
-            //    //clsTSMMessage msg;
-            //    //var len = output.Count;
-            //    //if(len == 0)
-            //    //    return;
-                
-            //    //var last = output[len - 1];
-            //    //var almostlast = len > 1 ? output[len - 2] : string.Empty;
-
-            //    //if (clsTSMMessage.TryParse(almostlast, out msg))
-            //    //    this.TSMMessage = msg;
-            //    //else
-            //    //{
-            //    //    if (clsTSMMessage.TryParse(last, out msg))
-            //    //        this.TSMMessage = msg;
-            //    //}
-            //}
+            this.DecodeMessage(output);			            
         }
-
-        //public TSMSeverity Severity
-        //{
-        //    get
-        //    {
-        //        return TSMMessage.Severity;
-        //    }
-        //}
     }
 }

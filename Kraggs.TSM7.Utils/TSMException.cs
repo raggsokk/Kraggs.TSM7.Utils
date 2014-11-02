@@ -134,5 +134,30 @@ namespace Kraggs.TSM7
 
             return false;
         }
+
+		public override string ToString()
+		{
+			//http://stackoverflow.com/questions/1886611/c-overriding-tostring-method-for-custom-exceptions
+			//TODO: Enable inheritors to Append their data too.
+
+			var sb = new StringBuilder();
+			sb.AppendFormat("{0}: ", this.GetType().Name);
+
+			if(TSMMessage != null)
+				sb.Append(TSMMessage.FullMessage);
+			else
+				sb.Append(Message);
+
+			if(this.InnerException != null) {
+				sb.AppendFormat(" ---> {0}", InnerException);
+				sb.AppendFormat(
+					"{0}   --- End of inner exception stack trace ---{0}", Environment.NewLine);
+			}
+
+			sb.Append(this.StackTrace);
+
+			return sb.ToString();
+			//return string.Format("[TSMException: TSMMessage={0}]", TSMMessage);
+		}
     }
 }
