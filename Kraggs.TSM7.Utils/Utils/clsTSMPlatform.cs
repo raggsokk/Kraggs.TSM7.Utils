@@ -31,8 +31,36 @@ namespace Kraggs.TSM7.Utils
     {
         internal static readonly absTSMPlatform sThisPlatform;
 
+		public static readonly bool IsLinux;
+		public static readonly bool IsMacOSX;
+		public static readonly bool IsWindows;
+
         static clsTSMPlatform()
         {
+			var osplatform = Environment.OSVersion.Platform;
+
+			if(osplatform == PlatformID.MacOSX) {
+				IsMacOSX = true;
+				sThisPlatform = new MacOSX.clsMacOSXPlatform();
+			} else if(osplatform == PlatformID.Unix) {
+
+				// this can still be maxosx unfortunately.
+
+				var flagRunningMac = MacOSX.clsMacOSXPlatform.GetIsRunningMac();
+
+				if(flagRunningMac) {
+					IsMacOSX = true;
+					sThisPlatform = new MacOSX.clsMacOSXPlatform();
+				} else {
+					IsLinux = true;
+					sThisPlatform = new Linux.clsLinuxPlatform();
+				}
+
+			} else {
+				IsWindows = true;
+				sThisPlatform = new Windows.clsWinPlatform();
+			}
+
             //if (Environment.OSVersion.Platform == PlatformID.Unix)
             //    sThisPlatform = new Linux.clsLinuxPlatform();
             //else if (Environment.OSVersion.Platform == PlatformID.MacOSX)
@@ -40,12 +68,12 @@ namespace Kraggs.TSM7.Utils
             //else
             //    sThisPlatform = new Windows.clsWinPlatform();
 
-            if (IsLinux)
-                sThisPlatform = new Linux.clsLinuxPlatform();
-            else if (IsMacOSX)
-                sThisPlatform = new Linux.clsLinuxPlatform(); // for now reuse this.
-            else
-                sThisPlatform = new Windows.clsWinPlatform();
+//            if (IsLinux)
+//                sThisPlatform = new Linux.clsLinuxPlatform();
+//            else if (IsMacOSX)
+//                sThisPlatform = new MacOSX.clsMacOSXPlatform();
+//            else
+//                sThisPlatform = new Windows.clsWinPlatform();
         }
 
         /// <summary>
@@ -60,41 +88,41 @@ namespace Kraggs.TSM7.Utils
             }
         }
 
-        /// <summary>
-        /// Helper function for determing which os we are on.
-        /// </summary>
-        [DebuggerNonUserCode()]
-        public static bool IsLinux
-        {
-            get
-            {
-                return Environment.OSVersion.Platform == PlatformID.Unix;
-            }
-        }
-
-        /// <summary>
-        /// Helper function for determing which os we are on.
-        /// </summary>
-        [DebuggerNonUserCode()]
-        public static bool IsMacOSX
-        {
-            get
-            {
-                return Environment.OSVersion.Platform == PlatformID.MacOSX;
-            }
-        }
-
-        /// <summary>
-        /// Helper function for determing which os we are on.
-        /// </summary>
-        [DebuggerNonUserCode()]
-        public static bool IsWindows
-        {
-            get
-            {
-                // lazy hack.
-                return !IsMacOSX && !IsLinux;
-            }
-        }
+//        /// <summary>
+//        /// Helper function for determing which os we are on.
+//        /// </summary>
+//        [DebuggerNonUserCode()]
+//        public static bool IsLinux
+//        {
+//            get
+//            {
+//                return Environment.OSVersion.Platform == PlatformID.Unix;
+//            }
+//        }
+//
+//        /// <summary>
+//        /// Helper function for determing which os we are on.
+//        /// </summary>
+//        [DebuggerNonUserCode()]
+//        public static bool IsMacOSX
+//        {
+//            get
+//            {
+//                return Environment.OSVersion.Platform == PlatformID.MacOSX;
+//            }
+//        }
+//
+//        /// <summary>
+//        /// Helper function for determing which os we are on.
+//        /// </summary>
+//        [DebuggerNonUserCode()]
+//        public static bool IsWindows
+//        {
+//            get
+//            {
+//                // lazy hack.
+//                return !IsMacOSX && !IsLinux;
+//            }
+//        }
     }
 }

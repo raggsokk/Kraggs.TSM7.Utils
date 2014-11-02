@@ -60,6 +60,17 @@ namespace Kraggs.TSM7
         public string Text { get; set; }
 
         /// <summary>
+        /// Severity of message.
+        /// </summary>
+        public TSMSeverity Severity
+        {
+            get
+            {
+                return (TSMSeverity)Type;
+            }
+        }
+
+        /// <summary>
         /// Assembles the FullMessage.
         /// </summary>
         public string FullMessage
@@ -104,6 +115,11 @@ namespace Kraggs.TSM7
         {
             tsmmsg = null;
 
+            if (string.IsNullOrWhiteSpace(MessageString))
+                return false;
+            if (MessageString.Length < 9)
+                return false;
+
             if (!Char.IsLetter(MessageString[0]))
                 return false;
             if (!Char.IsLetter(MessageString[1]))
@@ -137,6 +153,16 @@ namespace Kraggs.TSM7
 
             return true;
         }
-
+			
+		/// <summary>
+		/// Returns FullMessage.
+		/// Returns a <see cref="System.String"/> that represents the current <see cref="Kraggs.TSM7.clsTSMMessage"/>.
+		/// </summary>
+		/// <returns>A <see cref="System.String"/> that represents the current <see cref="Kraggs.TSM7.clsTSMMessage"/>.</returns>
+		public override string ToString()
+		{
+			return this.FullMessage;
+			//return string.Format("[clsTSMMessage: Prefix={0}, Number={1}, Type={2}, Text={3}, Severity={4}, FullMessage={5}]", Prefix, Number, Type, Text, Severity, FullMessage);
+		}
     }
 }

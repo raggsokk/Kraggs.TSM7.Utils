@@ -30,6 +30,13 @@ namespace Kraggs.TSM7.Utils
 {
     /// <summary>
     /// A somewhat simple DsmAdmc binary wrapper.
+    /// TODO:
+    ///     DebugLastCommand:
+    ///         Optionally save last command executed for debuging purposes.
+    ///     Check existance of dsm.opt and throw error if not.
+    ///     Check write access to dsmerror.log beforehand. and throw error.
+    ///     Check size of dsmerror.log and throw warning 
+    ///     
     /// </summary>
     public class clsDsmAdmc : absProcess
     {
@@ -58,20 +65,20 @@ namespace Kraggs.TSM7.Utils
             this.Validate();
         }
 
-        /// <summary>
-        /// Sets up 
-        /// </summary>
-        /// <param name="Username"></param>
-        /// <param name="Password"></param>
-        /// <param name="OptFile"></param>
-        public clsDsmAdmc(string Username, string Password, string OptFile = null) : this()
-        {
-            this.pUsername = Username;
-            this.pPassword = Password;
-
-            if(!string.IsNullOrWhiteSpace(OptFile))
-                this.pOptFile = OptFile;
-        }
+//        /// <summary>
+//        /// Sets up 
+//        /// </summary>
+//        /// <param name="Username"></param>
+//        /// <param name="Password"></param>
+//        /// <param name="OptFile"></param>
+//        public clsDsmAdmc(string Username, string Password, string OptFile = null) : this()
+//        {
+//            this.pUsername = Username;
+//            this.pPassword = Password;
+//
+//            if(!string.IsNullOrWhiteSpace(OptFile))
+//                this.pOptFile = OptFile;
+//        }
 
         public clsDsmAdmc(string Username, string Password, string Server, int? Port = null, string OptFile = null)
             : this()
@@ -85,6 +92,62 @@ namespace Kraggs.TSM7.Utils
             if (!string.IsNullOrWhiteSpace(OptFile))
                 this.pOptFile = OptFile;
         }
+
+		public static clsDsmAdmc CreateWithDefaults(string Username, string Password)
+		{
+			var admc = new clsDsmAdmc();
+			admc.pUsername = Username;
+			admc.pPassword = Password;
+
+			return admc;
+		}
+
+		/// <summary>
+		/// Creates a dsmadmc with username, password and custom optionfile. 
+		/// </summary>
+		/// <returns>The with option file.</returns>
+		/// <param name="Username">Username to connect to tsm server as.</param>
+		/// <param name="Password">Password to connect to tsm server as.</param>
+		/// <param name="OptionFile">Option file with connection parameters. For Unix see remarks.</param>
+		/// <remarks>
+		/// Although the linux/mac client can use custom option file with '-optfile' there are some rules to its usage.
+		/// In the same directory as the customer optionfile parameter this must be supplied.
+		/// 	1. dsm.sys : Doesn't matter what the optionfile is named, a dsm.sys file must exist with matching server stanza.
+		/// 	2. libs    : The shared libs needed to run dsmadmc must be copied or symlinked to this folder.
+		/// 	3. working dir: The working directory must be set to the same path.
+		/// 		(which currently is not possible).
+		/// </remarks>
+		public static clsDsmAdmc CreateWithOptionFile(string Username, string Password, string OptionFile)
+		{
+			if(!File.Exists(OptionFile))
+				throw new FileNotFoundException("OptionFile", OptionFile);
+				
+			var admc = new clsDsmAdmc();
+			admc.pUsername = Username;
+			admc.pPassword = Password;
+			admc.pOptFile = OptionFile;
+
+			return admc;
+		}
+
+		/// <summary>
+		/// Creates a dsmadmc with username, password and server. 
+		/// </summary>
+		/// <returns>The with server.</returns>
+		/// <param name="Username">Username to connect to tsm server as.</param>
+		/// <param name="Password">Password to connect to tsm server as.</param>
+		/// <param name="Server">On Windows, ip or hostname. On Unix this is ServerStanza.</param>
+		/// <param name="Port">On Windows optionally port to connect to. On Unix this is ignored.</param>
+		public static clsDsmAdmc CreateWithServer(string Username, string Password, string Server, int? Port)
+		{
+			var admc = new clsDsmAdmc();
+			admc.pUsername = Username;
+			admc.pPassword = Password;
+			admc.pServer = Server;
+			admc.pPort = Port;
+
+			return admc;
+		}
 
         //Doesn't have any error handling. But now it does.
         //public AdmcExitCode RunTSMCommandToCallback(string tsmCommand, DataReceivedEventHandler output = null, int TimeoutMs = 0 )
@@ -235,12 +298,13 @@ namespace Kraggs.TSM7.Utils
             {
                 if (retcode != AdmcExitCode.Ok && retcode != AdmcExitCode.NotFound)
                 {
-                    if (list != null && list.Count > 0)
-                    {
-                        throw new Exception(list[0]);
-                    }
-                    else //TODO: the error migth been redirected to outfile also. Check for error there?
-                        throw new Exception("An unspecified error occured. Check with dsmerror.log for more info.");
+                    throw new AdmcExitException(retcode, list);
+                    //if (list != null && list.Count > 0)
+                    //{
+                    //    throw new Exception(list[0]);
+                    //}
+                    //else //TODO: the error migth been redirected to outfile also. Check for error there?
+                    //    throw new Exception("An unspecified error occured. Check with dsmerror.log for more info.");
                 }
             }
 
@@ -263,7 +327,7 @@ namespace Kraggs.TSM7.Utils
 
             if (!string.IsNullOrWhiteSpace(this.pServer))
             {
-                if (clsTSMPlatform.IsLinux)
+                if (clsTSMPlatform.IsLinux || clsTSMPlatform.IsMacOSX)
                     sb.AppendFormat(" -se={0}", pServer);
                 else
                 {

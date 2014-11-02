@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -36,10 +36,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="clsTSMMessage.cs" />
-    <Compile Include="clsTSMException.cs" />
+    <Compile Include="TSMException.cs" />
+    <Compile Include="TSMSeverity.cs" />
     <Compile Include="Utils\absProcess.cs" />
     <Compile Include="Utils\absTSMPlatform.cs" />
     <Compile Include="Utils\AdmcExitCode.cs" />
+    <Compile Include="Utils\AdmcExitException.cs" />
     <Compile Include="Utils\clsDsmAdmc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utils\clsTSMPlatform.cs" />
@@ -47,6 +49,7 @@
     <Compile Include="Utils\Windows\clsTSMProduct.cs" />
     <Compile Include="Utils\Windows\clsTSMRegistry.cs" />
     <Compile Include="Utils\Windows\clsWinPlatform.cs" />
+    <Compile Include="Utils\MacOSX\clsMacOSXPlatform.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -56,4 +59,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <ItemGroup>
+    <Folder Include="Utils\MacOSX\" />
+  </ItemGroup>
 </Project>

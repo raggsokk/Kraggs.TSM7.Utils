@@ -88,5 +88,19 @@ namespace Kraggs.TSM7.Utils.Windows
         {
             get { return sDsmAdmcVersion; }
         }
+
+		/// <summary>
+		/// Returns on linux/mac the full path to the default dsm.sys file aka [BAClientPath]\dsm.sys
+		/// On Windows it will throw an exception.
+		/// DOES NOT CHECK IF FILE EXISTS.
+		/// </summary>
+		/// <value>The dsm sys.</value>
+		[DebuggerNonUserCode()]
+		public override string DsmSys {
+			get {
+				//return base.DsmSys;
+				throw new InvalidOperationException("Dsm.Sys is not used on this platform");
+			}
+		}
     }
 }
