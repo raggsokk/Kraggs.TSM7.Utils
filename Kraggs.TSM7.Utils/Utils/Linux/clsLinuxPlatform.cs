@@ -55,6 +55,10 @@ namespace Kraggs.TSM7.Utils.Linux
                 pLinuxDsmAdmc = testpath;
         }
 
+		/// <summary>
+		/// Returns the full path to the default dsmc binary on current platform.
+		/// </summary>
+		/// <value>The dsmc binary.</value>
         [DebuggerNonUserCode()]
         public override string DsmcBinary
         {
@@ -64,25 +68,33 @@ namespace Kraggs.TSM7.Utils.Linux
             }
         }
 
+		/// <summary>
+		/// Returns the full path to the default dsmadmc binary on current platform.
+		/// </summary>
+		/// <value>The dsm admc binary.</value>
         [DebuggerNonUserCode()]
         public override string DsmAdmcBinary
         {
             get { return pLinuxDsmAdmc; }
         }
 
+		/// <summary>
+		/// Returns the full path to the default BAClient install path on current platform.
+		/// </summary>
+		/// <value>The BA client path.</value>
         [DebuggerNonUserCode()]
         public override string BAClientPath
         {
             get { return pLinuxPath; }
         }
 
-        /// <summary>
-        /// Returns the dsm.sys location on linux.
-        /// </summary>
-        [DebuggerNonUserCode()]
-        public override string DsmSys
-        {
-            get { return Path.Combine(pLinuxPath, "dsm.sys"); }
-        }
+//        /// <summary>
+//        /// Returns the dsm.sys location on linux.
+//        /// </summary>
+//        [DebuggerNonUserCode()]
+//        public override string DsmSys
+//        {
+//            get { return Path.Combine(pLinuxPath, "dsm.sys"); }
+//        }
     }
 }

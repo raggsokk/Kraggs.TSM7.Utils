@@ -76,15 +76,18 @@ namespace Kraggs.TSM7.Utils
         }
         
         /// <summary>
-        /// Returns on linux the full path to the default dsm.sys file aka [BAClientPath]\dsm.sys
+        /// Returns on linux/mac the full path to the default dsm.sys file aka [BAClientPath]\dsm.sys
         /// On Windows it will throw an exception.
         /// DOES NOT CHECK IF FILE EXISTS.
         /// </summary>
+		[DebuggerNonUserCode()]
         public virtual string DsmSys 
         {
             get
             {
-                throw new InvalidOperationException("Dsm.Sys is not used on this platform");
+                //throw new InvalidOperationException("Dsm.Sys is not used on this platform");
+				// for now new default is get this.
+				return Path.Combine(BAClientPath, "dsm.sys");
             }
         }
 

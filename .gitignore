@@ -110,3 +110,11 @@ UpgradeLog*.XML
 # Ignore tsm password file.
 *.tsmpass
 *.ignore
+
+# PerUser data
+*.DS_Store
+*.sln.cache
+*.suo
+*.userprefs
+*.usertasks
+*.user
