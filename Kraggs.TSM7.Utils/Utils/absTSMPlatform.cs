@@ -91,6 +91,16 @@ namespace Kraggs.TSM7.Utils
             }
         }
 
+        /// <summary>
+        /// Validates that the current runnning platform is setup for running dsmadmc.
+        /// (For Windows: existanse of default dsm.opt and write access to dsmerror.log.
+        /// </summary>
+        /// <returns>The platform.</returns>
+        public virtual bool ValidatePlatform()
+        {
+            return true;
+        }
+
         //// only valid on windows.
         //public abstract string DsmcUtilBinary { get; } 
         //public abstract string TDPExchangePath { get; }

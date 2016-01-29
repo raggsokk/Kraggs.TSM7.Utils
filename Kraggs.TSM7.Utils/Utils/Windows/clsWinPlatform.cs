@@ -62,7 +62,7 @@ namespace Kraggs.TSM7.Utils.Windows
                     sDsmAdmcBinary = testPath;
                     sDsmAdmcVersion = regDsmAdmc.PtfLevel;
                 }
-            }            
+            }
         }
 
         [DebuggerNonUserCode()]
@@ -102,5 +102,44 @@ namespace Kraggs.TSM7.Utils.Windows
 				throw new InvalidOperationException("Dsm.Sys is not used on this platform");
 			}
 		}
+
+        /// <summary>
+        /// Validates that the current running environment is setup correctly.
+        /// Specifically it checks for existance of dsm.opt and write access to dsmerror.log.
+        /// </summary>
+        /// <returns>The platform.</returns>
+        public override bool ValidatePlatform()
+        {
+            //TODO: Why have return here at all? Why not just throw exceptions?
+
+            var defaultOpt = Path.Combine(this.BAClientPath, "dsm.opt");
+
+            if (!File.Exists(defaultOpt))
+            {
+                var message = string.Format(
+                    "DsmAdmc requires that file '{0}' exists, even if empty, for correctly running.", defaultOpt);
+                throw new FileNotFoundException(message, defaultOpt);
+                return false; // in case someone chooses continue for some reasen.
+            }
+
+            var dsmerrorlog = Path.Combine(this.BAClientPath, "dsmerror.log");
+
+            // use try/catch here to apply a more detailed exception instead of a generic not access exception.  
+            try
+            {
+                var f = File.OpenWrite(dsmerrorlog);
+                f.Close();
+            }
+            catch (UnauthorizedAccessException uae)
+            {
+                var message = string.Format(
+                    "DsmAdmc requires write access to file '{0}'. Either run as elevated or have an admin grant write access to that file to ensure correct dsmadmc handling.", dsmerrorlog);
+
+                throw new UnauthorizedAccessException(message, uae);
+                return false; // in case someone chooses continue for some reasen.
+            }
+
+            return true;
+        }
     }
 }

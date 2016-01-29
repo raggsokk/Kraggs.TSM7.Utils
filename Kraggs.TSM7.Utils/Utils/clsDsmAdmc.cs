@@ -41,10 +41,10 @@ namespace Kraggs.TSM7.Utils
     public class clsDsmAdmc : absProcess
     {
         // Connection info.
-        protected string pServer;
-        protected string pUsername;
+        public string Server { get; protected set; }
+        public string Username { get; protected set; }
         protected string pPassword;
-        protected int? pPort;
+        public int? Port { get; protected set; }
 
         protected string pOptFile;
 
@@ -62,7 +62,12 @@ namespace Kraggs.TSM7.Utils
 
             // this.pOptFile = clsTSMPlatform.TSMPlatform.DsmOpt;
 
+            // required by absProcess.
             this.Validate();
+
+            //TODO: combine our validation with absProcess.Validate somehow?
+            // validate our dsmadmc running environment.
+            clsTSMPlatform.sThisPlatform.ValidatePlatform();
         }
 
 //        /// <summary>
@@ -84,10 +89,10 @@ namespace Kraggs.TSM7.Utils
             : this()
         {
             //TODO: Validate username / server. its easy to switch wrong....
-            this.pUsername = Username;
+            this.Username = Username;
             this.pPassword = Password;
-            this.pServer = Server;
-            this.pPort = Port;
+            this.Server = Server;
+            this.Port = Port;
 
             if (!string.IsNullOrWhiteSpace(OptFile))
                 this.pOptFile = OptFile;
@@ -96,7 +101,7 @@ namespace Kraggs.TSM7.Utils
 		public static clsDsmAdmc CreateWithDefaults(string Username, string Password)
 		{
 			var admc = new clsDsmAdmc();
-			admc.pUsername = Username;
+			admc.Username = Username;
 			admc.pPassword = Password;
 
 			return admc;
@@ -123,7 +128,7 @@ namespace Kraggs.TSM7.Utils
 				throw new FileNotFoundException("OptionFile", OptionFile);
 				
 			var admc = new clsDsmAdmc();
-			admc.pUsername = Username;
+			admc.Username = Username;
 			admc.pPassword = Password;
 			admc.pOptFile = OptionFile;
 
@@ -141,10 +146,10 @@ namespace Kraggs.TSM7.Utils
 		public static clsDsmAdmc CreateWithServer(string Username, string Password, string Server, int? Port)
 		{
 			var admc = new clsDsmAdmc();
-			admc.pUsername = Username;
+			admc.Username = Username;
 			admc.pPassword = Password;
-			admc.pServer = Server;
-			admc.pPort = Port;
+			admc.Server = Server;
+			admc.Port = Port;
 
 			return admc;
 		}
@@ -173,6 +178,8 @@ namespace Kraggs.TSM7.Utils
 
         //    return retcode;
         //}
+
+
 
         /// <summary>
         /// Runs a tsm macro and redirects output to a string list.
@@ -325,20 +332,20 @@ namespace Kraggs.TSM7.Utils
         {
             var sb = new StringBuilder();
 
-            if (!string.IsNullOrWhiteSpace(this.pServer))
+            if (!string.IsNullOrWhiteSpace(this.Server))
             {
                 if (clsTSMPlatform.IsLinux || clsTSMPlatform.IsMacOSX)
-                    sb.AppendFormat(" -se={0}", pServer);
+                    sb.AppendFormat(" -se={0}", Server);
                 else
                 {
-                    sb.AppendFormat(" -tcps={0}", pServer);
+                    sb.AppendFormat(" -tcps={0}", Server);
 
-                    if (pPort.HasValue && pPort.Value > 0)
-                        sb.AppendFormat(" -tcpp={0}", pPort.Value);
+                    if (Port.HasValue && Port.Value > 0)
+                        sb.AppendFormat(" -tcpp={0}", Port.Value);
                 }
             }
 
-            sb.AppendFormat(" -id={0} -pa={1}", pUsername, pPassword);
+            sb.AppendFormat(" -id={0} -pa={1}", Username, pPassword);
 
             if (DataOnly)
                 sb.Append(" -dataonly=yes");
@@ -359,5 +366,22 @@ namespace Kraggs.TSM7.Utils
 
             return sb;
         }
+
+        #region Properties
+
+        /// <summary>
+        /// Returns the version of this dsmadmc exeutable.
+        /// (Currently only implemented on windows...)
+        /// </summary>
+        /// <value>The dsm admc version.</value>
+        public Version DsmAdmcVersion
+        {
+            get
+            {
+                return clsTSMPlatform.sThisPlatform.DsmAdmcVersion; 
+            }
+        }
+
+        #endregion
     }
 }
