@@ -11,7 +11,15 @@ TestResults
 # User-specific files
 *.suo
 *.user
+*.userosscache
 *.sln.docstates
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# DNX
+project.lock.json
+artifacts/
 
 # Build results
 [Dd]ebug/
@@ -37,6 +45,10 @@ x64/
 *.vssscc
 .builds
 
+# Visual Studio 2015 cache/options directory
+.vs/
+*.sln.ide/
+
 # Visual C++ cache files
 ipch/
 *.aps
@@ -59,7 +71,7 @@ _ReSharper*
 *.ncrunch*
 .*crunch*.local.xml
 
-# Installshield output folder 
+# Installshield output folder
 [Ee]xpress
 
 # DocProject is a documentation generator add-in
