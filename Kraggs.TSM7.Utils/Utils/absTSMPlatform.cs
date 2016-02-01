@@ -92,6 +92,15 @@ namespace Kraggs.TSM7.Utils
         }
 
         /// <summary>
+        /// Returns a user writable directory for use when redirecting dsmerror.log and when tmp outputting data to file.
+        /// </summary>
+        /// <returns></returns>
+        public virtual string GetUserWritableDirectory()
+        {
+            return Path.GetTempPath();
+        }
+
+        /// <summary>
         /// Validates that the current runnning platform is setup for running dsmadmc.
         /// (For Windows: existanse of default dsm.opt and write access to dsmerror.log.
         /// </summary>
@@ -100,6 +109,8 @@ namespace Kraggs.TSM7.Utils
         {
             return true;
         }
+
+
 
         //// only valid on windows.
         //public abstract string DsmcUtilBinary { get; } 

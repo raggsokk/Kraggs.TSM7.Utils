@@ -123,45 +123,9 @@ namespace Kraggs.TSM7.Utils.Windows
                 return false; // in case someone chooses continue for some reasen.
             }
 
+            // removed dsmerror.log writeaccess checks since not needed anymore.
 
-            /*
-                THIS CODE IS REMOVED.
-                Alternative is to create a sofisticated set of functions for
-                detecting if UAC is enabled or not, if user is an Admin or Not,
-                if this process has write access to dsmerror.log or not.
-
-                Merely checking if this process has write access to dsmerrorlog 
-                is not sufficient since we get an exceptino when another dsmcad
-                or other tsm processes uses the dsmerror.log.
-
-                So for now we are going to check for this error in the return result
-                rather than before, and maybe later implement such functions as
-                mentioned above when tested correctly...
-            */
-            //var dsmerrorlog = Path.Combine(this.BAClientPath, "dsmerror.log");
-
-            //// use try/catch here to apply a more detailed exception instead of a generic not access exception.  
-            //try
-            //{
-            //    //var f = File.OpenWrite(dsmerrorlog);
-            //    //var fi = new FileInfo(dsmerrorlog);
-
-            //    //var ac = fi.GetAccessControl(AccessControlSections.Access);
-
-            //    //ac.
-
-            //    //var f = File.OpenRead(dsmerrorlog);
-            //    //f.Close();
-            //}
-            ////catch (UnauthorizedAccessException uae)
-            //catch (UnauthorizedAccessException uae)
-            //{
-            //    var message = string.Format(
-            //        "DsmAdmc requires write access to file '{0}'. Either run as elevated or have an admin grant write access to that file to ensure correct dsmadmc handling.", dsmerrorlog);
-
-            //    throw new UnauthorizedAccessException(message, uae);
-            //    return false; // in case someone chooses continue for some reasen.
-            //}
+            // Add additionally environment checks here.
 
             return true;
         }

@@ -31,11 +31,11 @@ namespace Kraggs.TSM7.Utils
     /// <summary>
     /// A somewhat simple DsmAdmc binary wrapper.
     /// TODO:
-    ///     Check write access to dsmerror.log beforehand. and throw error.
     ///     Check size of dsmerror.log and throw warning 
     /// DONE:
     ///     Check existance of dsm.opt and throw error if not.
     ///     Optionally save last command executed for debuging purposes.
+    ///     Found workaround for "Check write access to dsmerror.log beforehand. and throw error."
     /// </summary>
     public class clsDsmAdmc : absProcess
     {
@@ -71,35 +71,33 @@ namespace Kraggs.TSM7.Utils
         protected clsDsmAdmc() : base()
         {
             // Not particular satisfied with this solution but it works for now...
+            var platform = clsTSMPlatform.TSMPlatform;
 
-            this.pExecutable = clsTSMPlatform.TSMPlatform.DsmAdmcBinary;
-            this.pWorkingDir = clsTSMPlatform.TSMPlatform.BAClientPath;
+            this.pExecutable = platform.DsmAdmcBinary;
+            this.pWorkingDir = platform.BAClientPath;
 
             // this.pOptFile = clsTSMPlatform.TSMPlatform.DsmOpt;
-
+            
             // required by absProcess.
             this.Validate();
 
             //TODO: combine our validation with absProcess.Validate somehow?
             // validate our dsmadmc running environment.
-            clsTSMPlatform.sThisPlatform.ValidatePlatform();
+            platform.ValidatePlatform();
+
+            // setting up DSM_LOG to bypass dsmerror.log errors even if non-admin non-elevated.
+            this.pEnvironments.Add("DSM_LOG", platform.GetUserWritableDirectory());            
         }
 
-//        /// <summary>
-//        /// Sets up 
-//        /// </summary>
-//        /// <param name="Username"></param>
-//        /// <param name="Password"></param>
-//        /// <param name="OptFile"></param>
-//        public clsDsmAdmc(string Username, string Password, string OptFile = null) : this()
-//        {
-//            this.pUsername = Username;
-//            this.pPassword = Password;
-//
-//            if(!string.IsNullOrWhiteSpace(OptFile))
-//                this.pOptFile = OptFile;
-//        }
-
+        /// <summary>
+        /// Sets up a dsmadmc class with a username and password to specified server.
+        /// Optionally also sets up a port to connect to or/and custom optional file.
+        /// </summary>
+        /// <param name="Username">The Admin Username-</param>
+        /// <param name="Password">The Admin Password.</param>
+        /// <param name="Server">The Ip or Hostname of the TSM Server to connect to.</param>
+        /// <param name="Port">Optionally the tsm server port to connect to.</param>
+        /// <param name="OptFile">Optionally, uses a custom Option File during connection.</param>
         public clsDsmAdmc(string Username, string Password, string Server, int? Port = null, string OptFile = null)
             : this()
         {
@@ -113,6 +111,12 @@ namespace Kraggs.TSM7.Utils
                 this.pOptFile = OptFile;
         }
 
+        /// <summary>
+        /// Connects to default tsm server and port using specified Admin Username and password.
+        /// </summary>
+        /// <param name="Username"></param>
+        /// <param name="Password"></param>
+        /// <returns></returns>
 		public static clsDsmAdmc CreateWithDefaults(string Username, string Password)
 		{
 			var admc = new clsDsmAdmc();
@@ -169,6 +173,7 @@ namespace Kraggs.TSM7.Utils
 			return admc;
 		}
 
+
         //Doesn't have any error handling. But now it does.
         //public AdmcExitCode RunTSMCommandToCallback(string tsmCommand, DataReceivedEventHandler output = null, int TimeoutMs = 0 )
         //{
@@ -193,7 +198,6 @@ namespace Kraggs.TSM7.Utils
 
         //    return retcode;
         //}
-
 
 
         /// <summary>
@@ -299,7 +303,7 @@ namespace Kraggs.TSM7.Utils
             {
                 if (File.Exists(tmpfile))
                     File.Delete(tmpfile);
-            }            
+            }
         }
 
         /// <summary>
@@ -394,6 +398,25 @@ namespace Kraggs.TSM7.Utils
             get
             {
                 return clsTSMPlatform.sThisPlatform.DsmAdmcVersion; 
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the DSM_LOG environment variable.
+        /// </summary>
+        /// <remarks>
+        /// The errorlogname and schedlogname options override DSM_LOG. If you specify the errorlogname client option, the file is stored in the directory specified by the errorlogname option and not in the location specified by DSM_LOG. If you specify the schedlogname client option, it is written to the directory specified by the schedlogname option and not in the location specified by DSM_LOG.
+        /// The log files cannot be symbolic links.Tivoli Storage Manager detects any such links, delete the links, then exit the operation.This prevents Tivoli Storage Manager from overwriting protected data.The affected logs are created as files in a subsequent operation.
+        /// </remarks>
+        public string DsmLog
+        {
+            get
+            {
+                return pEnvironments["DSM_LOG"];
+            }
+            set
+            {
+                pEnvironments["DSM_LOG"] = value;
             }
         }
 

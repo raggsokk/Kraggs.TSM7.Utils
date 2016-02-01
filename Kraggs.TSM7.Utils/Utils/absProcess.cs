@@ -26,6 +26,8 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 
+using System.Collections.Specialized;
+
 namespace Kraggs.TSM7.Utils
 {
     public abstract class absProcess
@@ -34,6 +36,10 @@ namespace Kraggs.TSM7.Utils
 
         protected string pExecutable;
         protected string pWorkingDir;
+
+        //protected List<KeyValuePair<string, string>> pEnvironments;
+        //protected StringDictionary pEnvironments;
+        protected SortedDictionary<string, string> pEnvironments;
 
         private bool flagValidated;
 
@@ -52,6 +58,8 @@ namespace Kraggs.TSM7.Utils
         protected absProcess()
         {
             // dummy ctor.
+            //pEnvironments = new List<KeyValuePair<string, string>>();
+            pEnvironments = new SortedDictionary<string, string>();
         }
 
         protected absProcess(string Executable, string WorkingDir = null)
@@ -202,6 +210,14 @@ namespace Kraggs.TSM7.Utils
                 this.DebugLastCommand = string.Format(
                     "Exe:'{0}', Args:'{1}'", proc.StartInfo.FileName, proc.StartInfo.Arguments);
 
+            //if(pEnvironments != null)
+            //{
+            //    foreach(var kv in pEnvironments)
+            //    {
+            //        proc.StartInfo.EnvironmentVariables.Add
+            //    }
+            //}
+
             using(proc)
             {
                 if (proc.Start())
@@ -239,15 +255,23 @@ namespace Kraggs.TSM7.Utils
         /// <returns></returns>
         protected virtual ProcessStartInfo GenerateProcessStartInfo(string Arguments)
         {
-            return new ProcessStartInfo()
+            var psi = new ProcessStartInfo()
             {
                 UseShellExecute = false,
                 CreateNoWindow = true,
                 WindowStyle = ProcessWindowStyle.Hidden,
                 Arguments = Arguments,
                 WorkingDirectory = this.pWorkingDir,
-                FileName = this.pExecutable,
+                FileName = this.pExecutable,                
             };
+
+            if(pEnvironments != null)
+            {
+                foreach (var kv in pEnvironments)
+                    psi.EnvironmentVariables.Add(kv.Key, kv.Value);
+            }
+
+            return psi;
         }
     }
 }
