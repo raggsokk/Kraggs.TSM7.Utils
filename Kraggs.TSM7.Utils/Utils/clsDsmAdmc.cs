@@ -31,27 +31,42 @@ namespace Kraggs.TSM7.Utils
     /// <summary>
     /// A somewhat simple DsmAdmc binary wrapper.
     /// TODO:
-    ///     DebugLastCommand:
-    ///         Optionally save last command executed for debuging purposes.
-    ///     Check existance of dsm.opt and throw error if not.
     ///     Check write access to dsmerror.log beforehand. and throw error.
     ///     Check size of dsmerror.log and throw warning 
-    ///     
+    /// DONE:
+    ///     Check existance of dsm.opt and throw error if not.
+    ///     Optionally save last command executed for debuging purposes.
     /// </summary>
     public class clsDsmAdmc : absProcess
     {
         // Connection info.
+        /// <summary>
+        /// The ip or hostname of the TSM Server to connect to.
+        /// </summary>
         public string Server { get; protected set; }
+        /// <summary>
+        /// The Admin Username to use connect as.
+        /// </summary>
         public string Username { get; protected set; }
+        /// <summary>
+        /// The Admin Password to use during connection.
+        /// </summary>
         protected string pPassword;
+        /// <summary>
+        /// Optionally the admin port to connect to in case of non-default TSM Admin Port.
+        /// Very seldom needed thou.
+        /// </summary>
         public int? Port { get; protected set; }
 
+        /// <summary>
+        /// In case custom option file is in use, store this here.
+        /// </summary>
         protected string pOptFile;
 
         /// <summary>
         /// Throws exception on tsm errors. argument exception will still occur.
         /// </summary>
-        public bool ThrowOnErrors { get; protected set; }
+        public bool ThrowOnErrors { get; protected set; } = true;
 
         protected clsDsmAdmc() : base()
         {
@@ -301,7 +316,7 @@ namespace Kraggs.TSM7.Utils
             //var retcode = (AdmcExitCode)base.RunCommand(FinishedArgument, output, null, TimeoutMs);
             var retcode = (AdmcExitCode)base.RunCommand(FinishedArgument, list, null, TimeoutMs);
 
-            if (!ThrowOnErrors)
+            if (ThrowOnErrors)
             {
                 if (retcode != AdmcExitCode.Ok && retcode != AdmcExitCode.NotFound)
                 {

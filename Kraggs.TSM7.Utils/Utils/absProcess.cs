@@ -37,8 +37,13 @@ namespace Kraggs.TSM7.Utils
 
         private bool flagValidated;
 
-        //private bool flagDebugSaveLastCommand;
+        /// <summary>
+        /// Enables/disables saving the last dsmadmc command run in 'DebugLastCommand'
+        /// </summary>
         public bool DebugSaveLastCommand { get; set; } // = false;
+        /// <summary>
+        /// If enabled, saves the last dsmadmc command run here for use during debugging.
+        /// </summary>
         public string DebugLastCommand { get; private set; }        
 
         /// <summary>
