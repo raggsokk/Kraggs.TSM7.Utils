@@ -25,7 +25,7 @@ using System.Text;
 
 using System.IO;
 using System.Diagnostics;
-using System.Security.AccessControl;
+//using System.Security.AccessControl;
 
 namespace Kraggs.TSM7.Utils.Windows
 {
@@ -34,36 +34,50 @@ namespace Kraggs.TSM7.Utils.Windows
     /// </summary>
     internal class clsWinPlatform : absTSMPlatform
     {
+        //internal static readonly string DEFAULT_PATH = @"/opt/tivoli/tsm/client/ba/bin";
+        internal static readonly string DEFAULT_PATH = @"C:\Program Files\Tivoli\TSM\BAClient";
+
         internal string sBAClientPath;
         internal string sDsmcBinary;
 
         internal string sDsmAdmcBinary;
-        internal Version sDsmAdmcVersion;
+        //internal Version sDsmAdmcVersion;
 
         public clsWinPlatform()
         {
-            var regBAClient = clsTSMRegistry.GetProductByName("TSM Backup Archive Client");
-            if(regBAClient != null)
-            {
-                if (Directory.Exists(regBAClient.Path))
-                    sBAClientPath = regBAClient.Path;
+            if (Directory.Exists(DEFAULT_PATH))
+                this.sBAClientPath = DEFAULT_PATH;
 
-                var testpath = Path.Combine(sBAClientPath, "dsmc.exe");
-                if (File.Exists(testpath))
-                    sDsmcBinary = testpath;
-            }
+            var testpath = Path.Combine(DEFAULT_PATH, "dsmc.exe");
+            if (File.Exists(testpath))
+                sDsmcBinary = testpath;
 
-            var regDsmAdmc = clsTSMRegistry.GetProductByName("TSM Administrative Client");
-            if(regDsmAdmc != null)
-            {
-                var testPath = Path.Combine(regDsmAdmc.Path, "dsmadmc.exe");
+            testpath = Path.Combine(DEFAULT_PATH, "dsmadmc.exe");
+            if (File.Exists(testpath))
+                sDsmAdmcBinary = testpath;
 
-                if (File.Exists(testPath))
-                {
-                    sDsmAdmcBinary = testPath;
-                    sDsmAdmcVersion = regDsmAdmc.PtfLevel;
-                }
-            }
+            //var regBAClient = clsTSMRegistry.GetProductByName("TSM Backup Archive Client");
+            //if(regBAClient != null)
+            //{
+            //    if (Directory.Exists(regBAClient.Path))
+            //        sBAClientPath = regBAClient.Path;
+
+            //    var testpath = Path.Combine(sBAClientPath, "dsmc.exe");
+            //    if (File.Exists(testpath))
+            //        sDsmcBinary = testpath;
+            //}
+
+            //var regDsmAdmc = clsTSMRegistry.GetProductByName("TSM Administrative Client");
+            //if(regDsmAdmc != null)
+            //{
+            //    var testPath = Path.Combine(regDsmAdmc.Path, "dsmadmc.exe");
+
+            //    if (File.Exists(testPath))
+            //    {
+            //        sDsmAdmcBinary = testPath;
+            //        sDsmAdmcVersion = regDsmAdmc.PtfLevel;
+            //    }
+            //}
         }
 
         [DebuggerNonUserCode()]
@@ -84,11 +98,11 @@ namespace Kraggs.TSM7.Utils.Windows
             get { return sBAClientPath; }
         }
         
-        [DebuggerNonUserCode()]
-        public override Version DsmAdmcVersion
-        {
-            get { return sDsmAdmcVersion; }
-        }
+        //[DebuggerNonUserCode()]
+        //public override Version DsmAdmcVersion
+        //{
+        //    get { return sDsmAdmcVersion; }
+        //}
 
 		/// <summary>
 		/// Returns on linux/mac the full path to the default dsm.sys file aka [BAClientPath]\dsm.sys
@@ -120,7 +134,7 @@ namespace Kraggs.TSM7.Utils.Windows
                 var message = string.Format(
                     "DsmAdmc requires that file '{0}' exists, even if empty, for correctly running.", defaultOpt);
                 throw new FileNotFoundException(message, defaultOpt);
-                return false; // in case someone chooses continue for some reasen.
+                //return false; // in case someone chooses continue for some reasen.
             }
 
             // removed dsmerror.log writeaccess checks since not needed anymore.

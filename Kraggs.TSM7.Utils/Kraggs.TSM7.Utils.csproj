@@ -1,65 +1,26 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{760884B9-4507-4356-88C2-468B71F20BC4}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <TargetFrameworks>netstandard1.3;net46</TargetFrameworks>
     <RootNamespace>Kraggs.TSM7</RootNamespace>
-    <AssemblyName>Kraggs.TSM7</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
+    <AssemblyVersion>0.5.0.0</AssemblyVersion>
+    <FileVersion>0.5.0.0</FileVersion>
+    <Copyright>Copyright © 2017 Jarle Hansen.</Copyright>
+    <Description>TSM 7.1 Utility library.</Description>
+    <Version>0.5.0</Version>
+    <PackageProjectUrl>https://github.com/raggsokk/Kraggs.TSM7.Utils</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/raggsokk/Kraggs.TSM7.Utils</RepositoryUrl>
+    <RepositoryType>Github</RepositoryType>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
+
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="System.Diagnostics.Process" Version="4.*" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="clsTSMMessage.cs" />
-    <Compile Include="TSMException.cs" />
-    <Compile Include="TSMSeverity.cs" />
-    <Compile Include="Utils\absProcess.cs" />
-    <Compile Include="Utils\absTSMPlatform.cs" />
-    <Compile Include="Utils\AdmcExitCode.cs" />
-    <Compile Include="Utils\AdmcExitException.cs" />
-    <Compile Include="Utils\clsDsmAdmc.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utils\clsTSMPlatform.cs" />
-    <Compile Include="Utils\Linux\clsLinuxPlatform.cs" />
-    <Compile Include="Utils\Windows\clsTSMProduct.cs" />
-    <Compile Include="Utils\Windows\clsTSMRegistry.cs" />
-    <Compile Include="Utils\Windows\clsWinPlatform.cs" />
-    <Compile Include="Utils\MacOSX\clsMacOSXPlatform.cs" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
-  <ItemGroup>
-    <Folder Include="Utils\MacOSX\" />
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">    
+    <PackageReference Remove="NETStandard.Library" />
   </ItemGroup>
 </Project>

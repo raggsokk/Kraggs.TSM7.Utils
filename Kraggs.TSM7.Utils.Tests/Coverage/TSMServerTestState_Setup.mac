@@ -1,4 +1,0 @@
-﻿/* create and lock an admin account */
-register admin NUNIT_ADMIN_LOCKED SecretPassword
-lock admin NUNIT_ADMIN_LOCKED
-

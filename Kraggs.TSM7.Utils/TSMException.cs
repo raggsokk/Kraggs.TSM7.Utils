@@ -25,7 +25,7 @@ using System.Text;
 using System.Linq;
 
 using System.Diagnostics;
-using System.Runtime.Serialization;
+//using System.Runtime.Serialization;
 
 namespace Kraggs.TSM7
 {
@@ -59,18 +59,18 @@ namespace Kraggs.TSM7
             this.DecodeMessage(output);
         }
 
-        protected TSMException( SerializationInfo info, StreamingContext context ) : base( info, context ) 
-        { 
-            if(info != null)
-            {
-            //    this.ExitCode = info.GetInt32("ExitCode");
-            //    this.TSMMessages = (List<clsTSMMessage>)info.GetValue("TSMMessages", typeof(List<clsTSMMessage>));
-                //var msg = info.GetValue("TSMMessage", typeof(clsTSMMessage)) as clsTSMMessage;
-                //if (msg != null)
-                //    this.TSMMessage = msg;
-                this.TSMMessage = info.GetValue("TSMMessage", typeof(clsTSMMessage)) as clsTSMMessage;
-            }
-        }
+        //protected TSMException( SerializationInfo info, StreamingContext context ) : base( info, context ) 
+        //{ 
+        //    if(info != null)
+        //    {
+        //    //    this.ExitCode = info.GetInt32("ExitCode");
+        //    //    this.TSMMessages = (List<clsTSMMessage>)info.GetValue("TSMMessages", typeof(List<clsTSMMessage>));
+        //        //var msg = info.GetValue("TSMMessage", typeof(clsTSMMessage)) as clsTSMMessage;
+        //        //if (msg != null)
+        //        //    this.TSMMessage = msg;
+        //        this.TSMMessage = info.GetValue("TSMMessage", typeof(clsTSMMessage)) as clsTSMMessage;
+        //    }
+        //}
 
         /// <summary>
         /// Tries to decode message string into a TSMMessage class.

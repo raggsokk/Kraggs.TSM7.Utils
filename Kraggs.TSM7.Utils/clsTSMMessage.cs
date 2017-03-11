@@ -24,7 +24,7 @@ using System.Collections.Generic;
 using System.Text;
 
 using System.Diagnostics;
-using System.Runtime.Serialization;
+//using System.Runtime.Serialization;
 
 namespace Kraggs.TSM7
 {
@@ -89,21 +89,21 @@ namespace Kraggs.TSM7
         protected clsTSMMessage()
         { }
 
-        /// <summary>
-        /// Serialized constructor.
-        /// </summary>
-        /// <param name="info"></param>
-        /// <param name="context"></param>
-        protected clsTSMMessage(SerializationInfo info, StreamingContext  context)
-        {
-            if(info != null)
-            {
-                this.Prefix = info.GetString("Prefix");
-                this.Number = info.GetInt32("Number");
-                this.Type = info.GetChar("Type");
-                this.Text = info.GetString("Text");
-            }
-        }
+        ///// <summary>
+        ///// Serialized constructor.
+        ///// </summary>
+        ///// <param name="info"></param>
+        ///// <param name="context"></param>
+        //protected clsTSMMessage(SerializationInfo info, StreamingContext  context)
+        //{
+        //    if(info != null)
+        //    {
+        //        this.Prefix = info.GetString("Prefix");
+        //        this.Number = info.GetInt32("Number");
+        //        this.Type = info.GetChar("Type");
+        //        this.Text = info.GetString("Text");
+        //    }
+        //}
 
         /// <summary>
         /// Try parse a string into an message string.

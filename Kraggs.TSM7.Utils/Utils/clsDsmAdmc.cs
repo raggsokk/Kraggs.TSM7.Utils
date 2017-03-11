@@ -72,12 +72,13 @@ namespace Kraggs.TSM7.Utils
         {
             // Not particular satisfied with this solution but it works for now...
             var platform = clsTSMPlatform.TSMPlatform;
+            Debug.Assert(platform != null, "TSMPlatform is null, should always have been set in type init.");
 
             this.pExecutable = platform.DsmAdmcBinary;
             this.pWorkingDir = platform.BAClientPath;
 
             // this.pOptFile = clsTSMPlatform.TSMPlatform.DsmOpt;
-            
+
             // required by absProcess.
             this.Validate();
 

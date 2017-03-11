@@ -75,6 +75,9 @@ namespace Kraggs.TSM7.Utils
         /// </summary>
         protected void Validate()
         {
+            //Debug.Assert(pExecutable != null && pExecutable.Length > 0, $"pExecutable is not valid '{pExecutable}'");
+            //Debug.Assert(pWorkingDir != null && pWorkingDir.Length > 0, $"pExecutable is not valid '{pWorkingDir}'");
+
             if (string.IsNullOrWhiteSpace(this.pExecutable))
                 throw new ArgumentNullException("pExecutable");
             else
@@ -259,7 +262,7 @@ namespace Kraggs.TSM7.Utils
             {
                 UseShellExecute = false,
                 CreateNoWindow = true,
-                WindowStyle = ProcessWindowStyle.Hidden,
+                //WindowStyle = ProcessWindowStyle.Hidden,
                 Arguments = Arguments,
                 WorkingDirectory = this.pWorkingDir,
                 FileName = this.pExecutable,                
@@ -268,7 +271,8 @@ namespace Kraggs.TSM7.Utils
             if(pEnvironments != null)
             {
                 foreach (var kv in pEnvironments)
-                    psi.EnvironmentVariables.Add(kv.Key, kv.Value);
+                    //psi.EnvironmentVariables.Add(kv.Key, kv.Value);
+                    psi.Environment.Add(kv);
             }
 
             return psi;

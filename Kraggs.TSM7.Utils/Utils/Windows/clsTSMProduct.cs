@@ -19,29 +19,29 @@
 */
 #endregion
 
-using System;
-using System.Collections.Generic;
-using System.Text;
+//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-using System.Diagnostics;
+//using System.Diagnostics;
 
-namespace Kraggs.TSM7.Utils.Windows
-{
-    [DebuggerDisplay("{Component}, v{PtfLevel}")]
-    internal class clsTSMProduct
-    {
-        public string Component { get; set; }
-        public string RegSubKey { get; set; }
-        public string Path { get; set; }
-        public Version PtfLevel { get; set; }
-    }
+//namespace Kraggs.TSM7.Utils.Windows
+//{
+//    [DebuggerDisplay("{Component}, v{PtfLevel}")]
+//    internal class clsTSMProduct
+//    {
+//        public string Component { get; set; }
+//        public string RegSubKey { get; set; }
+//        public string Path { get; set; }
+//        public Version PtfLevel { get; set; }
+//    }
 
-    [DebuggerDisplay("{Component}, v{PtfLevel}")]
-    internal class clsTSMBAClientProduct : clsTSMProduct
-    {
-        public string DefaultVssStagingDir { get; set; }
+//    [DebuggerDisplay("{Component}, v{PtfLevel}")]
+//    internal class clsTSMBAClientProduct : clsTSMProduct
+//    {
+//        public string DefaultVssStagingDir { get; set; }
 
-        // Smaller codebase means less chance of bugs. chopping this out until needed.
-        //public SortedList<string, int> Languages { get; set; }
-    }
-}
+//        // Smaller codebase means less chance of bugs. chopping this out until needed.
+//        //public SortedList<string, int> Languages { get; set; }
+//    }
+//}
